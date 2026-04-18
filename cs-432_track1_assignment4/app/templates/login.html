@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixIIT Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --panel-color: rgba(10, 10, 10, 0.9);
+            --panel-strong: #101010;
+            --surface-color: #161616;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --accent: #7c3aed;
+            --accent-strong: #06b6d4;
+            --accent-hot: #ec4899;
+            --error-color: #fda4af;
+            --error-bg: rgba(190, 24, 93, 0.18);
+            --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at top left, rgba(124, 58, 237, 0.22), transparent 28%),
+                radial-gradient(circle at top right, rgba(236, 72, 153, 0.16), transparent 24%),
+                radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.2), transparent 30%),
+                linear-gradient(160deg, #000000 0%, var(--bg-color) 42%, #090909 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 20px;
+        }
+
+        .login-shell {
+            width: 100%;
+            max-width: 1080px;
+            display: grid;
+            grid-template-columns: minmax(280px, 1.05fr) minmax(320px, 0.95fr);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            background: rgba(7, 7, 7, 0.84);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+        }
+
+        .hero-panel {
+            padding: 56px 48px;
+            background:
+                radial-gradient(circle at top left, rgba(124, 58, 237, 0.18), transparent 36%),
+                radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.14), transparent 34%),
+                linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(4, 4, 4, 0.98));
+            position: relative;
+        }
+
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            inset: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            border-radius: 24px;
+            pointer-events: none;
+        }
+
+        .hero-panel h1 {
+            margin: 0;
+            font-size: clamp(2.25rem, 4vw, 3.6rem);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-panel p {
+            max-width: 420px;
+            margin: 14px 0 0;
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.65;
+        }
+
+        .hero-note {
+            margin-top: 24px;
+            display: inline-flex;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #d4d4d8;
+            font-size: 0.84rem;
+        }
+
+        .login-card {
+            padding: 56px 42px;
+            background:
+                radial-gradient(circle at top right, rgba(236, 72, 153, 0.09), transparent 28%),
+                linear-gradient(180deg, rgba(8, 8, 8, 0.98), rgba(12, 12, 12, 0.92)),
+                var(--panel-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            margin-bottom: 28px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: #d4d4d8;
+            font-size: 0.93rem;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: rgba(8, 8, 8, 0.92);
+            color: var(--text-main);
+            font-size: 0.98rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #737373;
+        }
+
+        input:focus {
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow:
+                0 0 0 4px rgba(6, 182, 212, 0.12),
+                0 0 24px rgba(124, 58, 237, 0.18);
+            background: rgba(5, 5, 5, 1);
+            transform: translateY(-1px);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 15px 18px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 52%, var(--accent-hot) 100%);
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            box-shadow:
+                0 18px 30px rgba(124, 58, 237, 0.24),
+                0 0 26px rgba(6, 182, 212, 0.14);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+            box-shadow:
+                0 22px 34px rgba(124, 58, 237, 0.3),
+                0 0 30px rgba(236, 72, 153, 0.16);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #errorMsg {
+            display: none;
+            margin-top: 20px;
+            padding: 14px 16px;
+            border: 1px solid rgba(244, 114, 182, 0.24);
+            border-radius: 14px;
+            background: var(--error-bg);
+            color: var(--error-color);
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .helper-text {
+            margin-top: 14px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .input-hint {
+            margin-top: 8px;
+            color: #737373;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 920px) {
+            .login-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel,
+            .login-card {
+                padding: 38px 28px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 16px;
+            }
+
+            .hero-panel,
+            .login-card {
+                padding: 28px 20px;
+            }
+
+            .hero-panel::after {
+                inset: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-shell">
+        <section class="hero-panel">
+            <h1>FixIIT</h1>
+            <p>Campus complaints, clearer tracking, faster response.</p>
+            <div class="hero-note">For admins, staff, and registered members</div>
+        </section>
+
+        <div class="login-card">
+            <div class="header">
+                <h2>Sign in to FixIIT</h2>
+                <p>Use your account to continue.</p>
+            </div>
+
+            <form id="loginForm" onsubmit="event.preventDefault(); attemptLogin();">
+                <div class="form-group">
+                    <label for="email">Username or Email</label>
+                    <input type="text" id="email" placeholder="e.g. rohit.staff@iitgn.ac.in" required>
+                    <div class="input-hint">You can also use your username.</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <button id="loginButton" type="submit">Sign In</button>
+            </form>
+
+            <div id="errorMsg">Invalid credentials.</div>
+            <div class="helper-text">You can sign in with either your username or your email address.</div>
+        </div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = '/portfolio_page';
+        }
+
+        async function attemptLogin() {
+            const emailInput = document.getElementById('email').value.trim();
+            const passwordInput = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const loginButton = document.getElementById('loginButton');
+
+            if (!emailInput || !passwordInput) {
+                errorMsg.innerText = "Please fill in both fields.";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+            loginButton.disabled = true;
+            loginButton.innerText = 'Signing In...';
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user: emailInput, password: passwordInput })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('token', data.session_token);
+                    window.location.href = '/portfolio_page';
+                    return;
+                }
+
+                errorMsg.innerText = data.error || "Login failed.";
+                errorMsg.style.display = 'block';
+            } catch (error) {
+                errorMsg.innerText = "Could not reach the server. Make sure the Flask app is running and reload the page.";
+                errorMsg.style.display = 'block';
+            } finally {
+                loginButton.disabled = false;
+                loginButton.innerText = 'Sign In';
+            }
+        }
+    </script>
+</body>
+</html>

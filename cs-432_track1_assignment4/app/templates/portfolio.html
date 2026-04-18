@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixIIT Complaint Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --bg-strong: #000000;
+            --panel-color: rgba(10, 10, 10, 0.92);
+            --panel-elevated: rgba(18, 18, 18, 0.86);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent: #7c3aed;
+            --accent-strong: #06b6d4;
+            --accent-hot: #ec4899;
+            --success: #22c55e;
+            --success-bright: #4ade80;
+            --warning: #f59e0b;
+            --warning-bright: #fbbf24;
+            --danger: #fb7185;
+            --danger-strong: #ef4444;
+            --shadow-lg: 0 28px 60px rgba(0, 0, 0, 0.65);
+            --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at top left, rgba(124, 58, 237, 0.2), transparent 22%),
+                radial-gradient(circle at top right, rgba(236, 72, 153, 0.14), transparent 22%),
+                radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.18), transparent 24%),
+                linear-gradient(180deg, var(--bg-strong) 0%, var(--bg-color) 42%, #090909 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .page-shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 24px auto 40px;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+                rgba(6, 6, 6, 0.84);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(18px);
+        }
+
+        .brand-block h2 {
+            margin: 0 0 6px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-block p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .user-chip {
+            padding: 10px 14px;
+            border: 1px solid rgba(124, 58, 237, 0.26);
+            border-radius: 999px;
+            background: rgba(14, 14, 14, 0.88);
+            color: #e4e4e7;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .hero-card,
+        .quick-card,
+        .section,
+        .password-section {
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top right, rgba(124, 58, 237, 0.1), transparent 30%),
+                linear-gradient(180deg, rgba(18, 18, 18, 0.9), rgba(8, 8, 8, 0.96));
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(18px);
+        }
+
+        .hero-card {
+            padding: 24px 30px;
+        }
+
+        .hero-card h1 {
+            margin: 0 0 10px;
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-card p {
+            margin: 0;
+            max-width: 700px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .quick-card {
+            padding: 24px;
+            display: grid;
+            gap: 14px;
+            align-content: start;
+        }
+
+        .quick-card h3,
+        .section h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .quick-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.94rem;
+        }
+
+        .container {
+            display: grid;
+            gap: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .stat-card {
+            padding: 18px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background:
+                radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent 32%),
+                linear-gradient(180deg, rgba(18, 18, 18, 0.92), rgba(8, 8, 8, 0.96));
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .stat-value {
+            margin-top: 8px;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .password-section,
+        .section {
+            padding: 24px;
+        }
+
+        .password-section {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .section-heading p {
+            margin: 8px 0 0;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .section-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(124, 58, 237, 0.14);
+            color: #f5d0fe;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .inline-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: rgba(7, 7, 7, 0.96);
+            color: var(--text-main);
+            font-size: 0.96rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgba(6, 182, 212, 0.78);
+            box-shadow:
+                0 0 0 4px rgba(6, 182, 212, 0.12),
+                0 0 26px rgba(124, 58, 237, 0.16);
+            background: rgba(3, 3, 3, 1);
+            transform: translateY(-1px);
+        }
+
+        button {
+            padding: 13px 18px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 55%, var(--accent-hot) 100%);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            box-shadow:
+                0 16px 28px rgba(124, 58, 237, 0.24),
+                0 0 22px rgba(6, 182, 212, 0.14);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            color: #f5f5f5;
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.32);
+        }
+
+        .success-btn,
+        .warning-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 55%, var(--accent-hot) 100%);
+            color: #ffffff;
+            box-shadow:
+                0 16px 28px rgba(124, 58, 237, 0.24),
+                0 0 22px rgba(6, 182, 212, 0.14);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--danger) 0%, var(--danger-strong) 60%, var(--accent) 100%);
+            color: #ffffff;
+            box-shadow: 0 16px 28px rgba(239, 68, 68, 0.22);
+        }
+
+        #reportingAs {
+            margin: 0 0 18px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        #complaintsList {
+            display: grid;
+            gap: 16px;
+        }
+
+        #portfolioList,
+        #auditLogList {
+            display: grid;
+            gap: 16px;
+        }
+
+        .empty-state {
+            padding: 22px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            background: rgba(8, 8, 8, 0.84);
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .empty-state strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .card {
+            position: relative;
+            padding: 22px;
+            border-radius: 22px;
+            border: 1px solid var(--border-color);
+            background:
+                radial-gradient(circle at top right, rgba(6, 182, 212, 0.08), transparent 26%),
+                linear-gradient(180deg, rgba(18, 18, 18, 0.88), rgba(8, 8, 8, 0.98));
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.02rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #f8fafc;
+        }
+
+        .card-info {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 14px;
+        }
+
+        .card-meta {
+            display: grid;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-update-box {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .status-update-box select {
+            width: auto;
+            min-width: 160px;
+        }
+
+        .delete-btn {
+            padding: 9px 12px;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.14);
+            color: #ffe4e6;
+            box-shadow: none;
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.22);
+            filter: none;
+        }
+
+        .log-line {
+            padding: 16px 18px;
+            border-radius: 18px;
+            border: 1px solid var(--border-color);
+            background: rgba(8, 8, 8, 0.88);
+        }
+
+        .log-line strong {
+            color: #f8fafc;
+        }
+
+        @media (max-width: 920px) {
+            .navbar {
+                position: static;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .page-shell {
+                width: min(100% - 20px, 1180px);
+                margin: 12px auto 28px;
+            }
+
+            .navbar,
+            .hero-card,
+            .quick-card,
+            .password-section,
+            .section {
+                padding: 18px;
+                border-radius: 20px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-user {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+
+            .status-update-box select,
+            .status-update-box button,
+            .inline-actions button {
+                width: 100%;
+            }
+
+            .password-section input,
+            .password-section button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="navbar">
+            <div class="brand-block">
+                <h2>FixIIT Complaint Portal</h2>
+                <p>Track and manage complaints in one place.</p>
+            </div>
+            <div class="nav-user">
+                <span id="userInfo" class="user-chip">Loading user info...</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+
+        <section class="hero-grid">
+            <div class="hero-card">
+                <h1>FixIIT Complaint Portal</h1>
+                <p>Raise issues, track progress, and keep responses organized.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Open</div>
+                    <div id="openCount" class="stat-value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">In Progress</div>
+                    <div id="progressCount" class="stat-value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Closed</div>
+                    <div id="closedCount" class="stat-value">0</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="password-section">
+                <input type="password" id="newPasswordInput" placeholder="Enter a new password">
+                <button class="secondary-btn" onclick="changePassword()">Change Password</button>
+            </div>
+
+            <div id="adminSection" class="section" style="display: none;">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">AD</span>
+                            <h3>System Administration</h3>
+                        </div>
+                        <p>Manage members and review system activity.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="newName" placeholder="Full Name">
+                    <input type="text" id="newUsername" placeholder="Username">
+                    <input type="email" id="newEmail" placeholder="Email Address">
+                    <input type="text" id="newContact" placeholder="Contact Number">
+                    <select id="newRole">
+                        <option value="1">User</option>
+                        <option value="2">Staff</option>
+                        <option value="3">Admin</option>
+                    </select>
+                </div>
+
+                <div class="inline-actions">
+                    <button onclick="addMember()">Add Member</button>
+                    <button class="secondary-btn" onclick="viewMembersInNewWindow()">See Registered Members</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">MB</span>
+                            <h3>Member Portfolio</h3>
+                        </div>
+                    </div>
+                </div>
+                <div id="portfolioList"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">NW</span>
+                            <h3>Raise a New Complaint</h3>
+                        </div>
+                    </div>
+                </div>
+                <p id="reportingAs"></p>
+                <div class="form-group">
+                    <select id="complaintLocationType" onchange="populateComplaintLocationOptions()">
+                        <option value="hostel">Hostel</option>
+                        <option value="location">Campus Location</option>
+                    </select>
+                    <select id="complaintLocationSelect">
+                        <option value="">Choose hostel</option>
+                    </select>
+                    <input type="text" id="complaintRoom" placeholder="Room Number">
+                </div>
+                <div class="form-group" style="grid-template-columns: minmax(0, 1fr) auto;">
+                    <input type="text" id="complaintDesc" placeholder="Describe the issue, for example: Broken fan in Room 101">
+                    <button class="success-btn" onclick="raiseComplaint()">Submit Complaint</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">CL</span>
+                            <h3>Recent Complaints</h3>
+                        </div>
+                        <p>Sorted by status so pending work appears first.</p>
+                    </div>
+                    <div style="min-width: 220px;">
+                        <select id="complaintStatusFilter" onchange="loadComplaints()">
+                            <option value="all">All statuses</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="complaintsList"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">SH</span>
+                            <h3>Sharding Overview</h3>
+                        </div>
+                        <p>Complaint data is hash-routed by member ID across three simulated shards.</p>
+                    </div>
+                </div>
+                <div id="shardOverview"></div>
+            </div>
+
+            <div id="auditSection" class="section" style="display: none;">
+                <div class="section-heading">
+                    <div>
+                        <div class="section-label">
+                            <span class="section-icon">LG</span>
+                            <h3>Audit Log</h3>
+                        </div>
+                    </div>
+                </div>
+                <div id="auditLogList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = '/login_page';
+
+        let currentUserRole = '';
+        let currentUsername = '';
+        let currentUserEmail = '';
+        let complaintHostels = [];
+        let complaintLocations = [];
+        let complaintStatuses = [];
+        let shardOverviewData = null;
+
+        window.onload = async function() {
+            const authRes = await fetch('/isAuth', { headers: { 'x-access-token': token } });
+            if (!authRes.ok) { logout(); return; }
+            const authData = await authRes.json();
+
+            currentUserRole = authData.role;
+            currentUsername = authData.username;
+            currentUserEmail = authData.email;
+            document.getElementById('userInfo').innerText = `Logged in as ${authData.username} | ${currentUserRole}`;
+            document.getElementById('reportingAs').innerText = `Reporting as: ${authData.username} (${authData.email})`;
+
+            if (currentUserRole === 'Admin' || currentUserRole === 'admin') {
+                document.getElementById('adminSection').style.display = 'block';
+                document.getElementById('auditSection').style.display = 'block';
+                loadAuditLogs();
+            }
+
+            await loadComplaintMetadata();
+            loadShardingOverview();
+            loadPortfolio();
+            loadComplaints();
+        };
+
+        async function loadMembers() { return; }
+
+        function viewMembersInNewWindow() {
+            const win = window.open("", "Registered Members", "width=800,height=700");
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Registered Members</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+                    <style>
+                        :root {
+                            --bg: #050505;
+                            --panel: rgba(10, 10, 10, 0.94);
+                            --border: rgba(255, 255, 255, 0.1);
+                            --text: #f5f5f5;
+                            --subtle: #a3a3a3;
+                            --accent: #7c3aed;
+                        }
+                        * { box-sizing: border-box; }
+                        body {
+                            margin: 0;
+                            min-height: 100vh;
+                            padding: 24px;
+                            font-family: 'Plus Jakarta Sans', sans-serif;
+                            background:
+                                radial-gradient(circle at top left, rgba(124, 58, 237, 0.2), transparent 26%),
+                                radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.16), transparent 28%),
+                                linear-gradient(180deg, #000000 0%, var(--bg) 45%, #0a0a0a 100%);
+                            color: var(--text);
+                        }
+                        h2 {
+                            margin: 0 0 18px;
+                            font-size: 1.5rem;
+                            letter-spacing: -0.03em;
+                        }
+                        #content { display: grid; gap: 14px; }
+                        .card {
+                            padding: 18px;
+                            border-radius: 18px;
+                            border: 1px solid var(--border);
+                            background:
+                                linear-gradient(180deg, rgba(20, 20, 20, 0.88), var(--panel));
+                        }
+                        .row {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 12px;
+                            flex-wrap: wrap;
+                        }
+                        .role {
+                            padding: 7px 10px;
+                            border-radius: 999px;
+                            background: rgba(124, 58, 237, 0.14);
+                            color: #f5d0fe;
+                            font-size: 0.75rem;
+                            font-weight: 800;
+                            text-transform: uppercase;
+                            letter-spacing: 0.05em;
+                        }
+                        .meta {
+                            margin-top: 8px;
+                            color: var(--subtle);
+                            font-size: 0.92rem;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h2>Registered Members</h2>
+                    <div id="content">Loading...</div>
+                </body>
+                </html>
+            `);
+
+            fetch('/portfolio', { headers: { 'x-access-token': token } })
+                .then(res => res.json())
+                .then(data => {
+                    const content = win.document.getElementById('content');
+                    content.innerHTML = '';
+                    if (data.portfolio && data.portfolio.length) {
+                        data.portfolio.forEach(item => {
+                            content.innerHTML += `
+                                <div class="card">
+                                    <div class="row">
+                                        <strong>${item.name}</strong>
+                                        <span class="role">${item.role}</span>
+                                    </div>
+                                    <div class="meta">${item.username} | ${item.email} | ${item.contact}</div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        content.innerHTML = '<div class="card">No members found or unauthorized.</div>';
+                    }
+                });
+        }
+
+        async function addMember() {
+            const payload = {
+                name: document.getElementById('newName').value,
+                username: document.getElementById('newUsername').value,
+                email: document.getElementById('newEmail').value,
+                contact: document.getElementById('newContact').value,
+                role_id: parseInt(document.getElementById('newRole').value)
+            };
+            const res = await fetch('/portfolio', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-access-token': token }, body: JSON.stringify(payload) });
+
+            if (res.ok) {
+                const successData = await res.json();
+                alert(successData.message);
+                document.getElementById('newName').value = '';
+                document.getElementById('newUsername').value = '';
+                document.getElementById('newEmail').value = '';
+                document.getElementById('newContact').value = '';
+                loadPortfolio();
+                loadAuditLogs();
+            } else {
+                const errorData = await res.json(); alert(errorData.error);
+            }
+        }
+
+        async function loadPortfolio() {
+            const res = await fetch('/portfolio', { headers: { 'x-access-token': token } });
+            const data = await res.json();
+            const listDiv = document.getElementById('portfolioList');
+            listDiv.innerHTML = '';
+
+            if (data.portfolio && data.portfolio.length) {
+                data.portfolio.forEach(item => {
+                    let deleteBtn = '';
+                    if (currentUserRole === 'Admin' || currentUserRole === 'admin') {
+                        deleteBtn = `<button class="delete-btn" onclick="deleteMember(${item.id})">Delete</button>`;
+                    }
+
+                    listDiv.innerHTML += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">${item.name}</div>
+                                ${deleteBtn}
+                            </div>
+                            <div class="card-meta">
+                                <div><strong>Username:</strong> ${item.username}</div>
+                                <div><strong>Email:</strong> ${item.email}</div>
+                                <div><strong>Contact:</strong> ${item.contact}</div>
+                                <div><strong>Role:</strong> ${item.role_label}</div>
+                                <div><strong>Location:</strong> ${item.location}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                listDiv.innerHTML = '<div class="empty-state">No member records available for your current permissions.</div>';
+            }
+        }
+
+        async function deleteMember(memberId) {
+            if (!confirm("Are you sure you want to delete this member?")) return;
+            const res = await fetch(`/portfolio/${memberId}`, {
+                method: 'DELETE',
+                headers: { 'x-access-token': token }
+            });
+
+            const data = await res.json();
+            alert(data.message || data.error);
+            if (res.ok) {
+                loadPortfolio();
+                loadAuditLogs();
+            }
+        }
+
+        async function raiseComplaint() {
+            const desc = document.getElementById('complaintDesc').value;
+            const locationType = document.getElementById('complaintLocationType').value;
+            const locationId = document.getElementById('complaintLocationSelect').value;
+            const roomNumber = document.getElementById('complaintRoom').value;
+            if (!desc) { alert("Please enter a description."); return; }
+            if (!locationId) { alert("Please choose a complaint location."); return; }
+            if (locationType === 'hostel' && !roomNumber) { alert("Please enter the hostel room number."); return; }
+
+            const res = await fetch('/complaints', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-access-token': token },
+                body: JSON.stringify({
+                    description: desc,
+                    location_type: locationType,
+                    location_id: locationId,
+                    room_number: roomNumber
+                })
+            });
+            if (res.ok) {
+                document.getElementById('complaintDesc').value = '';
+                document.getElementById('complaintRoom').value = '';
+                document.getElementById('complaintLocationType').value = 'hostel';
+                populateComplaintLocationOptions();
+                loadComplaints();
+                loadAuditLogs();
+            } else {
+                const err = await res.json();
+                alert(err.error || "Failed to raise complaint.");
+            }
+        }
+
+        async function updateStatus(complaintId) {
+            const newStatusId = document.getElementById(`statusSelect-${complaintId}`).value;
+            const res = await fetch(`/complaints/${complaintId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'x-access-token': token },
+                body: JSON.stringify({ status_id: newStatusId })
+            });
+
+            if (res.ok) {
+                loadComplaints();
+                loadAuditLogs();
+            }
+            else { const errorData = await res.json(); alert(errorData.error); }
+        }
+
+        async function deleteComplaint(complaintId) {
+            if (!confirm("Are you sure you want to delete this complaint?")) return;
+            const res = await fetch(`/complaints/${complaintId}`, {
+                method: 'DELETE',
+                headers: { 'x-access-token': token }
+            });
+            if (res.ok) {
+                loadComplaints();
+                loadAuditLogs();
+            }
+            else { const errorData = await res.json(); alert(errorData.error); }
+        }
+
+        async function loadComplaints() {
+            const statusFilter = document.getElementById('complaintStatusFilter').value;
+            const query = statusFilter && statusFilter !== 'all'
+                ? `/complaints?status=${encodeURIComponent(statusFilter)}`
+                : '/complaints';
+            const res = await fetch(query, { headers: { 'x-access-token': token } });
+            const data = await res.json();
+            const listDiv = document.getElementById('complaintsList');
+            listDiv.innerHTML = '';
+            updateComplaintStats(data.complaints || []);
+            renderShardOverview(shardOverviewData, data.routing || null);
+
+            if (data.complaints && data.complaints.length) {
+                data.complaints.forEach(item => {
+                    let statusColor = '#cbd5e1';
+                    let statusBg = 'rgba(148, 163, 184, 0.18)';
+
+                    if (item.status === 'resolved' || item.status === 'closed') {
+                        statusColor = '#bbf7d0'; statusBg = 'rgba(34, 197, 94, 0.16)';
+                    } else if (item.status === 'open') {
+                        statusColor = '#fecaca'; statusBg = 'rgba(239, 68, 68, 0.16)';
+                    } else {
+                        statusColor = '#fde68a'; statusBg = 'rgba(245, 158, 11, 0.18)';
+                    }
+
+                    let statusControls = '';
+                    if (currentUserRole === 'Admin' || currentUserRole === 'admin' || currentUserRole === 'Staff' || currentUserRole === 'staff') {
+                        statusControls = `
+                            <div class="status-update-box">
+                                <select id="statusSelect-${item.id}">
+                                    <option value="1" ${item.status === 'open' ? 'selected' : ''}>Open</option>
+                                    <option value="2" ${item.status === 'assigned' ? 'selected' : ''}>Assigned</option>
+                                    <option value="3" ${item.status === 'in progress' ? 'selected' : ''}>In Progress</option>
+                                    <option value="4" ${item.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                                    <option value="5" ${item.status === 'closed' ? 'selected' : ''}>Closed</option>
+                                </select>
+                                <button class="warning-btn" onclick="updateStatus(${item.id})">Update Status</button>
+                            </div>
+                        `;
+                    }
+
+                    let deleteBtn = '';
+                    if (currentUserRole === 'Admin' || currentUserRole === 'admin' || currentUsername === item.username || currentUserEmail === item.email) {
+                        deleteBtn = `<button class="delete-btn" onclick="deleteComplaint(${item.id})">Delete</button>`;
+                    }
+
+                    listDiv.innerHTML += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Complaint #${item.id}: ${item.description}</div>
+                                ${deleteBtn}
+                            </div>
+                            <div class="card-info">
+                                Reported by: <strong>${item.member}</strong> (${item.email})
+                            </div>
+                            <div class="card-info">
+                                Location: <strong>${item.location}</strong>
+                            </div>
+                            <div class="card-info">
+                                Routed to: <strong>Shard ${item.shard_id}</strong>
+                            </div>
+                            <div>
+                                <span class="status-badge" style="background: ${statusBg}; color: ${statusColor};">
+                                    ${item.status}
+                                </span>
+                            </div>
+                            ${statusControls}
+                        </div>
+                    `;
+                });
+            } else {
+                listDiv.innerHTML = '<div class="empty-state"><strong>No complaints found</strong>Try a different status filter or submit a new complaint.</div>';
+            }
+        }
+
+        async function loadShardingOverview() {
+            const res = await fetch('/sharding_overview', { headers: { 'x-access-token': token } });
+            if (!res.ok) { return; }
+            shardOverviewData = await res.json();
+            renderShardOverview(shardOverviewData, null);
+        }
+
+        function renderShardOverview(overview, routing) {
+            const target = document.getElementById('shardOverview');
+            if (!target) return;
+
+            if (!overview || !overview.distribution || !overview.distribution.length) {
+                target.innerHTML = '<div class="empty-state">Shard summary is unavailable right now.</div>';
+                return;
+            }
+
+            const routingLine = routing
+                ? `<div class="card-info">Last query routing: <strong>${routing.scatter_gather ? 'Scatter-gather across shards' : 'Single-shard lookup'}</strong> via ${routing.strategy}.</div>`
+                : '';
+
+            target.innerHTML = `
+                <div class="card">
+                    <div class="card-title">Shard Key: ${overview.shard_key}</div>
+                    <div class="card-info">Strategy: <strong>${overview.strategy}</strong> using <strong>${overview.formula}</strong></div>
+                    ${routingLine}
+                    <div class="card-meta">
+                        ${overview.distribution.map(item =>
+                            `<div><strong>Shard ${item.shard_id}</strong> (${item.table}) | complaints: ${item.total_complaints} | members: ${item.distinct_members}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateComplaintStats(complaints) {
+            const counts = { open: 0, progress: 0, closed: 0 };
+            complaints.forEach(item => {
+                const status = (item.status || '').toLowerCase();
+                if (status === 'open') counts.open += 1;
+                if (status === 'assigned' || status === 'in progress' || status === 'resolved') counts.progress += 1;
+                if (status === 'closed') counts.closed += 1;
+            });
+
+            document.getElementById('openCount').innerText = counts.open;
+            document.getElementById('progressCount').innerText = counts.progress;
+            document.getElementById('closedCount').innerText = counts.closed;
+        }
+
+        async function loadComplaintMetadata() {
+            const res = await fetch('/complaint_metadata', { headers: { 'x-access-token': token } });
+            if (!res.ok) { return; }
+
+            const data = await res.json();
+            complaintHostels = data.hostels || [];
+            complaintLocations = data.locations || [];
+            complaintStatuses = data.statuses || [];
+
+            populateComplaintLocationOptions();
+            populateComplaintStatusFilters();
+        }
+
+        function populateComplaintLocationOptions() {
+            const locationTypeEl = document.getElementById('complaintLocationType');
+            const locationSelectEl = document.getElementById('complaintLocationSelect');
+            const roomInputEl = document.getElementById('complaintRoom');
+            const selectedType = locationTypeEl.value;
+            const source = selectedType === 'hostel' ? complaintHostels : complaintLocations;
+            const placeholder = selectedType === 'hostel' ? 'Choose hostel' : 'Choose location';
+
+            locationSelectEl.innerHTML = `<option value="">${placeholder}</option>`;
+            source.forEach(item => {
+                locationSelectEl.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+
+            roomInputEl.style.display = selectedType === 'hostel' ? 'block' : 'none';
+            roomInputEl.required = selectedType === 'hostel';
+            if (selectedType !== 'hostel') {
+                roomInputEl.value = '';
+            }
+        }
+
+        function populateComplaintStatusFilters() {
+            const filterEl = document.getElementById('complaintStatusFilter');
+            filterEl.innerHTML = '<option value="all">All statuses</option>';
+            complaintStatuses.forEach(item => {
+                filterEl.innerHTML += `<option value="${item.name}">${toTitleCase(item.name)}</option>`;
+            });
+        }
+
+        function toTitleCase(value) {
+            return value.replace(/\b\w/g, char => char.toUpperCase());
+        }
+
+        function logout() { localStorage.removeItem('token'); window.location.href = '/login_page'; }
+        async function changePassword() {
+            const newPass = document.getElementById('newPasswordInput').value;
+            if (!newPass) return alert("Please enter a new password first.");
+
+            const res = await fetch('/change_password', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'x-access-token': token },
+                body: JSON.stringify({ new_password: newPass })
+            });
+
+            const data = await res.json();
+            alert(data.message || data.error);
+            if (res.ok) document.getElementById('newPasswordInput').value = '';
+        }
+
+        async function loadAuditLogs() {
+            if (!(currentUserRole === 'Admin' || currentUserRole === 'admin')) return;
+
+            const res = await fetch('/audit_logs', { headers: { 'x-access-token': token } });
+            const data = await res.json();
+            const listDiv = document.getElementById('auditLogList');
+            listDiv.innerHTML = '';
+
+            if (data.logs && data.logs.length) {
+                data.logs.forEach(item => {
+                    const sourceLabel = item.source === 'DIRECT_DB' ? 'Direct DB Change' : item.source;
+                    listDiv.innerHTML += `
+                        <div class="log-line">
+                            <strong>${item.action}</strong> on ${item.table || 'system'} by ${item.actor}
+                            <div class="card-info">${sourceLabel} | ${item.timestamp}</div>
+                            <div class="card-info">${item.details || 'No extra details recorded.'}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                listDiv.innerHTML = '<div class="empty-state">No audit entries yet.</div>';
+            }
+        }
+    </script>
+</body>
+</html>
